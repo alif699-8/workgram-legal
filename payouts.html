@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workgram — Payouts</title>
+<style>
+  :root {
+    --bg: #080810;
+    --card: #12121e;
+    --card-hover: #161624;
+    --border: #242436;
+    --text: #eeeef5;
+    --text-secondary: #9090a8;
+    --text-muted: #54546a;
+    --accent: #FF6B35;
+    --accent-soft: #FF6B3518;
+    --success: #2dd97a;
+    --success-soft: #2dd97a18;
+    --danger: #f74f4f;
+    --danger-soft: #f74f4f18;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+    padding: 24px 16px 80px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+
+  header { margin-bottom: 28px; }
+  .logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+  .logo-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 14px; color: var(--bg);
+  }
+  h1 { font-size: 22px; font-weight: 800; margin: 0; letter-spacing: -0.02em; }
+  .subtitle { color: var(--text-secondary); font-size: 14px; margin-top: 4px; }
+
+  #loginCard {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px; margin-bottom: 24px;
+  }
+  #loginCard h2 { font-size: 15px; font-weight: 700; margin: 0 0 4px; }
+  #loginCard p { font-size: 13px; color: var(--text-muted); margin: 0 0 16px; }
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 12px; font-weight: 700; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+  input[type="email"], input[type="password"] {
+    width: 100%; padding: 12px 14px; background: #0a0a14;
+    border: 1px solid var(--border); border-radius: 10px;
+    color: var(--text); font-size: 14px; font-family: inherit;
+  }
+  input:focus { outline: none; border-color: var(--accent); }
+  button {
+    font-family: inherit; cursor: pointer; border: none;
+    font-weight: 700; font-size: 14px; border-radius: 10px;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  button:active { transform: scale(0.98); }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    padding: 12px 20px; width: 100%;
+  }
+  .btn-primary:hover { opacity: 0.92; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  #errorBox {
+    display: none; background: var(--danger-soft); border: 1px solid #f74f4f40;
+    color: var(--danger); padding: 10px 14px; border-radius: 10px;
+    font-size: 13px; margin-top: 12px;
+  }
+
+  #summaryBar {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 18px 20px; margin-bottom: 20px;
+    display: none;
+    align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+  .summary-stat .num { font-size: 24px; font-weight: 900; color: var(--accent); line-height: 1.1; }
+  .summary-stat .label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+  .summary-stats { display: flex; gap: 28px; }
+  #refreshBtn {
+    background: transparent; border: 1px solid var(--border); color: var(--text-secondary);
+    padding: 9px 16px; font-size: 13px;
+  }
+  #refreshBtn:hover { border-color: var(--text-muted); color: var(--text); }
+
+  #payoutsList { display: flex; flex-direction: column; gap: 12px; }
+  .payout-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 18px 20px;
+  }
+  .payout-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+  .job-title { font-size: 15px; font-weight: 700; margin: 0 0 3px; }
+  .job-meta { font-size: 12px; color: var(--text-muted); }
+  .amount { font-size: 20px; font-weight: 900; color: var(--success); white-space: nowrap; }
+  .amount-label { font-size: 10px; color: var(--text-muted); text-align: right; text-transform: uppercase; letter-spacing: 0.04em; }
+
+  .worker-row {
+    display: flex; align-items: center; justify-content: space-between;
+    background: #0a0a14; border: 1px solid var(--border); border-radius: 12px;
+    padding: 12px 14px; gap: 10px; flex-wrap: wrap;
+  }
+  .worker-info { min-width: 0; }
+  .worker-name { font-size: 14px; font-weight: 700; }
+  .iban-row { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
+  .iban { font-size: 12px; color: var(--text-secondary); font-family: 'SF Mono', Consolas, monospace; letter-spacing: 0.02em; }
+  .no-iban { font-size: 12px; color: var(--danger); font-weight: 600; }
+  .copy-btn {
+    background: transparent; border: 1px solid var(--border); color: var(--text-secondary);
+    font-size: 11px; padding: 3px 9px; border-radius: 6px;
+  }
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+  .btn-mark-paid {
+    background: var(--success-soft); border: 1px solid #2dd97a40; color: var(--success);
+    padding: 10px 16px; font-size: 13px;
+  }
+  .btn-mark-paid:hover { background: #2dd97a28; }
+  .btn-mark-paid:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  #emptyState, #loadingState {
+    display: none; text-align: center; padding: 60px 20px; color: var(--text-muted);
+  }
+  #emptyState .icon, #loadingState .icon { font-size: 40px; margin-bottom: 12px; }
+  #emptyState h3 { color: var(--text); font-size: 16px; margin: 0 0 6px; }
+  #emptyState p, #loadingState p { font-size: 13px; margin: 0; }
+
+  .footer-note { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 32px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo-row">
+      <div class="logo-dot">W</div>
+      <h1>Payouts</h1>
+    </div>
+    <div class="subtitle">Jobs paid by customers, completed by workers, waiting on your bank transfer.</div>
+  </header>
+
+  <div id="loginCard">
+    <h2>Admin sign in</h2>
+    <p>Not saved anywhere — held only in this tab until you close it.</p>
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" autocomplete="username" placeholder="you@workgram.ie">
+    </div>
+    <div class="field">
+      <label for="pass">Password</label>
+      <input type="password" id="pass" autocomplete="current-password">
+    </div>
+    <button class="btn-primary" id="loginBtn" onclick="login()">Load payouts</button>
+    <div id="errorBox"></div>
+  </div>
+
+  <div id="summaryBar">
+    <div class="summary-stats">
+      <div class="summary-stat">
+        <div class="num" id="statCount">0</div>
+        <div class="label">Due</div>
+      </div>
+      <div class="summary-stat">
+        <div class="num" id="statTotal">€0</div>
+        <div class="label">Total owed</div>
+      </div>
+    </div>
+    <button id="refreshBtn" onclick="loadPayouts()">↻ Refresh</button>
+  </div>
+
+  <div id="loadingState">
+    <div class="icon">⏳</div>
+    <p>Loading payouts…</p>
+  </div>
+
+  <div id="emptyState">
+    <div class="icon">✅</div>
+    <h3>All caught up</h3>
+    <p>No payouts due right now.</p>
+  </div>
+
+  <div id="payoutsList"></div>
+
+  <div class="footer-note">workgram-api-production.up.railway.app</div>
+</div>
+
+<script>
+const API_BASE = 'https://workgram-api-production.up.railway.app';
+let authToken = null;
+
+async function login() {
+  const email = document.getElementById('email').value.trim();
+  const pass = document.getElementById('pass').value;
+  const errorBox = document.getElementById('errorBox');
+  const btn = document.getElementById('loginBtn');
+  errorBox.style.display = 'none';
+
+  if (!email || !pass) {
+    errorBox.textContent = 'Enter both email and password.';
+    errorBox.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Signing in…';
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `username=${encodeURIComponent(email)}&password=${encodeURIComponent(pass)}`,
+    });
+    if (!res.ok) throw new Error('Invalid email or password.');
+    const data = await res.json();
+    authToken = data.access_token;
+    document.getElementById('loginCard').style.display = 'none';
+    document.getElementById('summaryBar').style.display = 'flex';
+    await loadPayouts();
+  } catch (e) {
+    errorBox.textContent = e.message || 'Sign in failed. Check your details and try again.';
+    errorBox.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Load payouts';
+  }
+}
+
+async function loadPayouts() {
+  const list = document.getElementById('payoutsList');
+  const loading = document.getElementById('loadingState');
+  const empty = document.getElementById('emptyState');
+  list.innerHTML = '';
+  empty.style.display = 'none';
+  loading.style.display = 'block';
+
+  try {
+    const res = await fetch(`${API_BASE}/admin/payouts-due`, {
+      headers: { 'Authorization': `Bearer ${authToken}` },
+    });
+    if (res.status === 401 || res.status === 403) {
+      alert('Session expired or not authorized. Please sign in again.');
+      location.reload();
+      return;
+    }
+    const payouts = await res.json();
+    loading.style.display = 'none';
+
+    document.getElementById('statCount').textContent = payouts.length;
+    const total = payouts.reduce((sum, p) => sum + (p.worker_share_owed || 0), 0);
+    document.getElementById('statTotal').textContent = '€' + total.toFixed(2);
+
+    if (payouts.length === 0) {
+      empty.style.display = 'block';
+      return;
+    }
+
+    payouts.forEach(p => list.appendChild(renderCard(p)));
+  } catch (e) {
+    loading.style.display = 'none';
+    list.innerHTML = `<div style="color:var(--danger);text-align:center;padding:20px;">Could not load payouts. Check your connection and try refreshing.</div>`;
+  }
+}
+
+function renderCard(p) {
+  const card = document.createElement('div');
+  card.className = 'payout-card';
+
+  const completedDate = p.completed_at
+    ? new Date(p.completed_at).toLocaleDateString('en-IE', { day: 'numeric', month: 'short', year: 'numeric' })
+    : '—';
+
+  const ibanHtml = p.worker_iban
+    ? `<span class="iban" id="iban-${p.job_id}">${formatIban(p.worker_iban)}</span>
+       <button class="copy-btn" onclick="copyIban('${p.job_id}', '${p.worker_iban}')">Copy</button>`
+    : `<span class="no-iban">No IBAN on file</span>`;
+
+  card.innerHTML = `
+    <div class="payout-top">
+      <div>
+        <p class="job-title">${escapeHtml(p.job_title)}</p>
+        <p class="job-meta">Completed ${completedDate}</p>
+      </div>
+      <div>
+        <div class="amount">€${(p.worker_share_owed || 0).toFixed(2)}</div>
+        <div class="amount-label">Owed to worker</div>
+      </div>
+    </div>
+    <div class="worker-row">
+      <div class="worker-info">
+        <div class="worker-name">${escapeHtml(p.worker_name || 'Unknown worker')}</div>
+        <div class="iban-row">${ibanHtml}</div>
+      </div>
+      <div class="actions">
+        <button class="btn-mark-paid" onclick="markPaid(${p.job_id}, this)">✓ Mark as paid</button>
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+function formatIban(iban) {
+  return iban.replace(/(.{4})/g, '$1 ').trim();
+}
+
+function copyIban(jobId, iban) {
+  navigator.clipboard.writeText(iban).then(() => {
+    const btn = event.target;
+    const original = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = original; }, 1500);
+  });
+}
+
+async function markPaid(jobId, btnEl) {
+  if (!confirm('Confirm you have sent the bank transfer for this job? This cannot be undone.')) return;
+  btnEl.disabled = true;
+  btnEl.textContent = 'Marking…';
+  try {
+    const res = await fetch(`${API_BASE}/admin/payouts/${jobId}/mark-paid`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${authToken}` },
+    });
+    if (!res.ok) throw new Error('Failed to update.');
+    await loadPayouts();
+  } catch (e) {
+    alert('Could not mark as paid. Please try again.');
+    btnEl.disabled = false;
+    btnEl.textContent = '✓ Mark as paid';
+  }
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+
+document.getElementById('pass').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') login();
+});
+</script>
+</body>
+</html>
