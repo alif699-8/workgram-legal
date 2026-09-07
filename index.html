@@ -1,597 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IE">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Workgram — Hire anyone. See their work first.</title>
-<meta name="description" content="Kerry's local trades marketplace. Post a job, get bids from verified tradespeople, pay only when it's done.">
+<title>Workgram — Find local work. Find local workers.</title>
+<meta name="description" content="Find local workers, explore portfolios and post a job with Workgram. Discover work near you and build your reputation.">
+<link rel="canonical" href="https://workgram.ie/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-<style>
-  :root {
-    --paper: #17140f;
-    --paper-raised: #1f1b14;
-    --paper-deep: #0f0d0a;
-    --ink: #f4efe4;
-    --ink-soft: #c2b7a3;
-    --ink-faint: #857a67;
-    --line: #342d21;
-    --line-strong: #473e2d;
-    --orange: #ef8a4c;
-    --orange-ink: #1c1208;
-    --orange-deep: #ffa969;
-    --green: #6fbf94;
-    --green-soft: #1f2b22;
-    --green-ink: #9adcb6;
-    --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 12px 30px rgba(0,0,0,0.4);
-    --shadow-lift: 0 2px 4px rgba(0,0,0,0.4), 0 24px 48px rgba(0,0,0,0.5);
-    --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after { animation: none !important; transition: none !important; }
-    .reveal { opacity: 1 !important; transform: none !important; }
-  }
-
-  body {
-    margin: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: "Work Sans", ui-sans-serif, system-ui, sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
-
-  a { color: inherit; }
-  .label {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-  }
-
-  h1, h2, h3 {
-    font-family: "Big Shoulders Display", ui-sans-serif, system-ui, sans-serif;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.005em;
-    text-wrap: balance;
-    margin: 0;
-    color: var(--ink);
-  }
-
-  .shell { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
-
-  /* ===== Scroll reveal system ===== */
-  .reveal {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
-  }
-  .reveal.in { opacity: 1; transform: none; }
-  .stagger > * { opacity: 0; transform: translateY(24px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
-  .stagger.in > * { opacity: 1; transform: none; }
-  .stagger.in > *:nth-child(1) { transition-delay: 0.05s; }
-  .stagger.in > *:nth-child(2) { transition-delay: 0.15s; }
-  .stagger.in > *:nth-child(3) { transition-delay: 0.25s; }
-  .stagger.in > *:nth-child(4) { transition-delay: 0.35s; }
-  .stagger.in > *:nth-child(5) { transition-delay: 0.45s; }
-  .stagger.in > *:nth-child(6) { transition-delay: 0.55s; }
-  .stagger.in > *:nth-child(7) { transition-delay: 0.65s; }
-  .stagger.in > *:nth-child(8) { transition-delay: 0.75s; }
-
-  /* ===== Nav ===== */
-  nav.top {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 40;
-    padding: 22px 0;
-    transition: background 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
-  }
-  nav.top.scrolled {
-    background: color-mix(in srgb, var(--paper) 92%, transparent);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    padding: 14px 0;
-    box-shadow: 0 1px 0 var(--line);
-  }
-  .nav-row { display: flex; align-items: center; justify-content: space-between; }
-  .logo { display: flex; align-items: center; gap: 9px; font-family: "Big Shoulders Display"; font-weight: 900; font-size: 1.5rem; letter-spacing: 0.01em; text-transform: uppercase; text-decoration: none; }
-  .logo-mark { width: 32px; height: 19px; flex: none; }
-  .nav-links { display: flex; gap: 28px; align-items: center; }
-  .nav-links a { font-size: 0.9rem; font-weight: 500; text-decoration: none; color: var(--ink-soft); position: relative; transition: color 0.2s; }
-  .nav-links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px; background: var(--orange); transform: scaleX(0); transform-origin: left; transition: transform 0.3s var(--ease); }
-  .nav-links a:hover { color: var(--ink); }
-  .nav-links a:hover::after { transform: scaleX(1); }
-  .btn {
-    font-family: "Work Sans"; font-weight: 600; font-size: 0.92rem;
-    padding: 12px 22px; border-radius: 7px; border: 1px solid transparent;
-    cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
-    transition: transform 0.25s var(--ease), box-shadow 0.25s ease, background 0.2s ease;
-  }
-  .btn:hover { transform: translateY(-2px); }
-  .btn-primary { background: var(--orange); color: var(--orange-ink); box-shadow: 0 8px 24px -8px rgba(239,138,76,0.5); }
-  .btn-primary:hover { background: var(--orange-deep); box-shadow: 0 14px 32px -8px rgba(239,138,76,0.6); }
-  .btn-ghost { border-color: var(--line-strong); color: var(--ink); background: transparent; }
-  .btn-ghost:hover { border-color: var(--ink); }
-  @media (max-width: 900px) { .nav-links { display: none; } }
-
-  /* ===== Cinematic hero ===== */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    min-height: 100svh;
-    display: flex;
-    align-items: flex-end;
-    overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: -12% 0 0 0;
-    background-image: url("https://images.pexels.com/photos/29226620/pexels-photo-29226620/free-photo-of-professional-plumber-installing-a-radiator-pipe.jpeg?auto=compress&cs=tinysrgb&w=1920");
-    background-size: cover;
-    background-position: center 40%;
-    will-change: transform;
-    transform: translateY(0);
-  }
-  .hero-scrim {
-    position: absolute; inset: 0;
-    background:
-      linear-gradient(180deg, rgba(23,20,15,0.55) 0%, rgba(23,20,15,0.25) 30%, rgba(23,20,15,0.72) 70%, var(--paper) 100%),
-      linear-gradient(90deg, rgba(23,20,15,0.6) 0%, rgba(23,20,15,0.1) 60%);
-  }
-  .hero-content {
-    position: relative; z-index: 2;
-    width: 100%;
-    padding-bottom: 96px;
-    padding-top: 140px;
-  }
-  .eyebrow-row { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
-  .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex: none; box-shadow: 0 0 0 0 rgba(111,191,148,0.6); animation: dotpulse 2.2s ease-out infinite; }
-  @keyframes dotpulse { 0% { box-shadow: 0 0 0 0 rgba(111,191,148,0.6); } 100% { box-shadow: 0 0 0 12px rgba(111,191,148,0); } }
-
-  h1.hero-head { font-size: clamp(3rem, 7.4vw, 6.4rem); line-height: 0.92; max-width: 14ch; }
-  h1.hero-head .w { display: inline-block; opacity: 0; transform: translateY(40px); animation: wordup 0.9s var(--ease) forwards; }
-  h1.hero-head .w:nth-child(1) { animation-delay: 0.15s; }
-  h1.hero-head .w:nth-child(2) { animation-delay: 0.25s; }
-  h1.hero-head .w:nth-child(3) { animation-delay: 0.35s; }
-  h1.hero-head .w:nth-child(4) { animation-delay: 0.45s; }
-  h1.hero-head .w:nth-child(5) { animation-delay: 0.55s; }
-  h1.hero-head .w:nth-child(6) { animation-delay: 0.65s; }
-  h1.hero-head .accent { color: var(--orange); }
-  @keyframes wordup { to { opacity: 1; transform: none; } }
-
-  .hero-dek { margin: 26px 0 0; font-size: 1.15rem; color: var(--ink-soft); max-width: 46ch; opacity: 0; animation: wordup 0.9s var(--ease) 0.8s forwards; }
-  .hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-top: 34px; opacity: 0; animation: wordup 0.9s var(--ease) 0.95s forwards; }
-  .hero-sub-cta { margin-top: 18px; font-size: 0.88rem; color: var(--ink-faint); opacity: 0; animation: wordup 0.9s var(--ease) 1.05s forwards; }
-  .hero-sub-cta a { color: var(--green-ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
-
-  .hero-tag {
-    position: absolute; right: 28px; bottom: 32px; z-index: 3;
-    font-family: "IBM Plex Mono"; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase;
-    color: rgba(244,239,228,0.75); background: rgba(15,13,10,0.55); border: 1px solid rgba(244,239,228,0.14);
-    padding: 8px 12px; border-radius: 6px; backdrop-filter: blur(6px);
-    opacity: 0; animation: wordup 0.9s var(--ease) 1.3s forwards;
-  }
-  .scroll-cue {
-    position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 3;
-    width: 22px; height: 36px; border: 1.5px solid rgba(244,239,228,0.35); border-radius: 12px;
-    opacity: 0; animation: wordup 0.9s var(--ease) 1.5s forwards;
-  }
-  .scroll-cue::after { content: ""; position: absolute; left: 50%; top: 7px; width: 3px; height: 8px; margin-left: -1.5px; border-radius: 2px; background: var(--orange); animation: cue 1.8s ease-in-out infinite; }
-  @keyframes cue { 0%,100% { transform: translateY(0); opacity: 1; } 60% { transform: translateY(10px); opacity: 0; } }
-  @media (max-width: 720px) { .hero-tag, .scroll-cue { display: none; } }
-
-  /* ===== Status strip ===== */
-  .status-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--paper-raised); }
-  .status-row { display: grid; grid-template-columns: repeat(4, 1fr); }
-  .status-item { padding: 26px 24px; border-right: 1px solid var(--line); }
-  .status-item:last-child { border-right: none; }
-  .status-item .label { display: block; margin-bottom: 6px; }
-  .status-val { font-family: "Big Shoulders Display"; font-weight: 700; font-size: 1.2rem; text-transform: uppercase; }
-  @media (max-width: 780px) { .status-row { grid-template-columns: repeat(2, 1fr); } .status-item:nth-child(2) { border-right: none; } }
-
-  /* ===== Section scaffolding ===== */
-  section { padding: 110px 0; }
-  .section-tag { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
-  .section-tag::after { content: ""; height: 1px; flex: 1; background: var(--line-strong); }
-  h2.section-head { font-size: clamp(2.2rem, 4.6vw, 3.4rem); line-height: 0.96; max-width: 18ch; }
-  .section-dek { font-size: 1.05rem; color: var(--ink-soft); max-width: 56ch; margin-top: 18px; }
-
-  /* ===== Card grid (story + how it works) ===== */
-  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
-  @media (max-width: 860px) { .steps { grid-template-columns: 1fr; } }
-  .step {
-    background: var(--paper-raised); border: 1px solid var(--line); border-radius: 14px; padding: 28px 26px;
-    transition: transform 0.35s var(--ease), border-color 0.3s ease, box-shadow 0.35s ease;
-  }
-  .step:hover { transform: translateY(-4px); border-color: var(--line-strong); box-shadow: var(--shadow-lift); }
-  .step-num { font-family: "Big Shoulders Display"; font-weight: 900; font-size: 2.8rem; color: var(--orange); line-height: 1; margin-bottom: 14px; }
-  .step h3 { font-size: 1.15rem; margin-bottom: 8px; text-transform: none; }
-  .step p { font-size: 0.93rem; color: var(--ink-soft); margin: 0; }
-  .story-close { margin-top: 36px; font-family: "Big Shoulders Display"; font-weight: 800; font-size: 1.4rem; text-transform: uppercase; color: var(--orange); }
-
-  /* ===== How it works — photo + steps split ===== */
-  .how-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: center; margin-top: 48px; }
-  @media (max-width: 900px) { .how-grid { grid-template-columns: 1fr; } }
-  .how-photo { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 4/5; box-shadow: var(--shadow-lift); }
-  .how-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.04); transition: transform 1.2s var(--ease); }
-  .how-photo:hover img { transform: scale(1); }
-  .how-photo-tag { position: absolute; left: 16px; bottom: 16px; font-family: "IBM Plex Mono"; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(244,239,228,0.85); background: rgba(15,13,10,0.6); padding: 7px 11px; border-radius: 6px; backdrop-filter: blur(6px); }
-  .how-steps { display: flex; flex-direction: column; gap: 0; }
-  .how-step { display: grid; grid-template-columns: 56px 1fr; gap: 20px; padding: 26px 0; border-bottom: 1px solid var(--line); }
-  .how-step:last-child { border-bottom: none; }
-  .how-step .step-num { font-size: 2.2rem; margin: 0; }
-  .how-step h3 { font-size: 1.15rem; margin-bottom: 6px; text-transform: none; }
-  .how-step p { font-size: 0.93rem; color: var(--ink-soft); margin: 0; }
-
-  /* ===== Portfolio grid ===== */
-  .portfolio-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 44px; }
-  @media (max-width: 860px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
-  .pgrid-item { position: relative; aspect-ratio: 1; border-radius: 13px; overflow: hidden; border: 1px solid var(--line); background: var(--paper-raised); }
-  .pgrid-item img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.02); transition: transform 0.9s var(--ease); }
-  .pgrid-item:hover img { transform: scale(1.09); }
-  .pgrid-item .pcap { position: absolute; left: 0; right: 0; bottom: 0; padding: 32px 14px 12px; background: linear-gradient(180deg, transparent, rgba(15,13,10,0.85)); font-family: "IBM Plex Mono"; font-size: 0.66rem; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(244,239,228,0.85); opacity: 0; transform: translateY(6px); transition: opacity 0.4s ease, transform 0.4s var(--ease); }
-  .pgrid-item:hover .pcap { opacity: 1; transform: none; }
-  .portfolio-chip { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; font-size: 0.85rem; color: var(--ink-soft); background: var(--paper-raised); border: 1px solid var(--line); border-radius: 100px; padding: 7px 14px 7px 7px; }
-  .avatar { width: 30px; height: 30px; border-radius: 50%; flex: none; display: flex; align-items: center; justify-content: center; font-family: "Big Shoulders Display"; font-weight: 800; font-size: 0.85rem; color: #fff; }
-  .portfolio-chip .avatar { width: 24px; height: 24px; font-size: 0.7rem; }
-
-  /* ===== Split (customer / worker, reused for trust-proof) ===== */
-  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--line); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; margin-top: 24px; }
-  @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
-  .split-panel { background: var(--paper-raised); padding: 44px 38px; }
-  .split-panel.accent { background: var(--green-soft); }
-  .split-kicker { font-family: "IBM Plex Mono"; font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green-ink); margin-bottom: 12px; }
-  .split-panel h3 { font-size: 1.9rem; margin-bottom: 14px; }
-  .split-panel p.split-copy { font-size: 0.95rem; color: var(--ink-soft); margin: 0; }
-  .split-list { list-style: none; margin: 20px 0 26px; padding: 0; display: flex; flex-direction: column; gap: 11px; }
-  .split-list li { display: flex; gap: 10px; font-size: 0.95rem; color: var(--ink-soft); align-items: flex-start; }
-  .split-list svg { flex: none; margin-top: 3px; }
-
-  /* ===== Trust proof — photo panels ===== */
-  .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 44px; }
-  @media (max-width: 860px) { .proof-grid { grid-template-columns: 1fr; } }
-  .proof-card { position: relative; border-radius: 18px; overflow: hidden; min-height: 420px; display: flex; align-items: flex-end; border: 1px solid var(--line); background: var(--paper-raised); }
-  .proof-card .proof-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transform: scale(1.03); transition: transform 1.2s var(--ease); }
-  .proof-card:hover .proof-bg { transform: scale(1); }
-  .proof-card .proof-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,13,10,0.05) 0%, rgba(15,13,10,0.5) 50%, rgba(15,13,10,0.92) 100%); }
-  .proof-card .proof-body { position: relative; z-index: 2; padding: 32px; }
-  .proof-card .split-kicker { color: var(--green-ink); }
-  .proof-card h3 { font-size: 1.7rem; margin-bottom: 10px; color: var(--ink); }
-  .proof-card p { font-size: 0.93rem; color: var(--ink-soft); margin: 0; max-width: 40ch; }
-  .proof-card.placeholder .proof-bg { background: repeating-linear-gradient(135deg, var(--paper-raised) 0 14px, var(--paper) 14px 28px); }
-  .proof-card.placeholder .proof-note { position: absolute; top: 18px; left: 18px; z-index: 3; font-family: "IBM Plex Mono"; font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--orange); background: rgba(15,13,10,0.7); padding: 6px 10px; border-radius: 5px; border: 1px solid rgba(239,138,76,0.35); }
-
-  /* ===== Category grid ===== */
-  .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 44px; }
-  @media (max-width: 860px) { .cat-grid { grid-template-columns: repeat(2, 1fr); } }
-  .cat-card {
-    background: var(--paper-raised); border: 1px solid var(--line); border-radius: 13px;
-    padding: 22px 20px; display: flex; flex-direction: column; gap: 14px;
-    transition: border-color 0.25s ease, transform 0.35s var(--ease), box-shadow 0.35s ease;
-  }
-  .cat-card:hover { border-color: var(--orange); transform: translateY(-4px); box-shadow: var(--shadow-lift); }
-  .cat-icon { width: 36px; height: 36px; transition: transform 0.35s var(--ease); }
-  .cat-card:hover .cat-icon { transform: scale(1.1); }
-  .cat-card span { font-weight: 600; font-size: 0.96rem; }
-
-  /* ===== Founding banner ===== */
-  .banner {
-    position: relative; overflow: hidden;
-    border-radius: 20px; background: var(--paper-deep); color: var(--ink); border: 1px solid var(--line);
-    padding: 56px 52px; display: flex; justify-content: space-between; align-items: center; gap: 30px;
-  }
-  .banner::before { content: ""; position: absolute; width: 520px; height: 520px; right: -180px; top: -220px; border-radius: 50%; background: radial-gradient(circle, rgba(239,138,76,0.22), transparent 62%); pointer-events: none; }
-  .banner h2 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); max-width: 20ch; position: relative; }
-  .banner p { color: var(--ink-soft); margin-top: 10px; max-width: 42ch; font-size: 0.98rem; position: relative; }
-  .banner .btn-primary { flex: none; position: relative; }
-  @media (max-width: 780px) { .banner { flex-direction: column; align-items: flex-start; } }
-
-  /* ===== Footer ===== */
-  footer { border-top: 1px solid var(--line); padding: 56px 0 40px; background: var(--paper-deep); }
-  .foot-grid { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
-  .foot-brand .logo { margin-bottom: 10px; }
-  .foot-brand p { font-size: 0.88rem; color: var(--ink-faint); max-width: 34ch; }
-  .store-btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 16px; border: 1px solid var(--line-strong); border-radius: 9px; padding: 10px 16px; font-size: 0.85rem; font-weight: 600; text-decoration: none; color: var(--ink); transition: border-color 0.2s, transform 0.25s var(--ease); }
-  .store-btn:hover { border-color: var(--ink); transform: translateY(-2px); }
-  .qr-block { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
-  .qr-block img { width: 84px; height: 84px; border-radius: 8px; border: 1px solid var(--line-strong); background: #fff; padding: 4px; }
-  .qr-block-text { font-size: 0.78rem; color: var(--ink-faint); max-width: 22ch; }
-  .foot-cols { display: flex; gap: 56px; }
-  .foot-col .label { display: block; margin-bottom: 14px; }
-  .foot-col a { display: block; font-size: 0.9rem; color: var(--ink-soft); text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
-  .foot-col a:hover { color: var(--ink); }
-  .foot-legal { margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 0.8rem; color: var(--ink-faint); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-
-  ::selection { background: var(--orange); color: #fff; }
-</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Work+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/home.css">
+<script src="assets/home.js" defer></script>
 </head>
 <body>
-
-<nav class="top" id="nav">
-  <div class="shell nav-row">
-    <a href="/" class="logo">
-      <svg class="logo-mark" viewBox="0 0 100 60" fill="none"><polyline points="4,4 27,52 50,14 73,52 96,4" stroke="var(--orange)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Workgram
-    </a>
-    <div class="nav-links">
-      <a href="#how">How to Use</a>
-      <a href="#portfolio">Portfolio</a>
-      <a href="#workers">Sign Up</a>
-      <a href="/privacy.html">Privacy</a>
-      <a href="mailto:support@workgram.ie">Contact</a>
-    </div>
-    <a href="#get-app" class="btn btn-primary">Get the app</a>
+<div id="wg-immersive"><a class="wg-skip" href="#main-content">Skip to content</a>
+  
+  
+  <div class="wg-page" aria-label="Workgram">
+    <nav class="wg-nav" aria-label="Workgram navigation">
+      <a class="wg-brand" href="#wg-top" data-goto="top" aria-label="Workgram, back to top"><svg viewBox="0 0 100 60" fill="none" aria-hidden="true"><polyline points="4,4 27,52 50,14 73,52 96,4" stroke="#ff7134" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg>WORKGRAM</a>
+      <div class="wg-nav-links"><a href="#wg-story" data-goto="story">Our story</a><a href="#wg-guide" data-goto="guide">How it works</a><a href="mailto:support@workgram.ie">Support</a></div>
+      <a class="wg-action wg-primary" href="#wg-download" data-goto="download">Sign up</a>
+      <div class="wg-progress" aria-hidden="true"></div>
+    </nav>
+    <main id="main-content">
+      <header class="wg-wrap wg-hero" id="wg-top">
+        <div>
+          <div class="wg-eyebrow wg-local"><span class="wg-dot" aria-hidden="true"></span>Kerry &amp; Cork</div>
+          <div class="wg-role-switch" aria-label="Choose your journey"><button type="button" data-role="customer" aria-pressed="true">I need a worker</button><button type="button" data-role="worker" aria-pressed="false">I want work</button></div>
+          <h1 id="wg-hero-title">FIND LOCAL <em>WORKERS.</em><br>SEE THEIR WORK.</h1>
+          <p class="wg-hero-copy" id="wg-hero-copy">Find local skills. Explore portfolios. Choose who you hire.</p>
+          <div class="wg-actions"><a class="wg-action wg-primary" id="wg-hero-cta" href="#wg-download" data-goto="download">Post a job</a><a class="wg-action" href="#wg-guide" data-goto="guide">See how it works ↓</a></div>
+          <p class="wg-small wg-app-note">Continue in the Workgram app. iOS live · Android in closed testing.</p>
+          <p class="wg-small wg-app-note"><a href="#workers">Founding Kerry tradespeople: 0% platform fee, forever.</a></p>
+          <div class="wg-scroll-note"><span aria-hidden="true">↓</span>Scroll to meet Workgram</div>
+        </div>
+        <div class="wg-hero-side">
+          <figure class="wg-editorial wg-hero-photo"><img src="assets/generic_hero.webp" data-asset="generic_hero" width="1200" height="800" alt="Illustrative photo of a carpenter fitting oak kitchen cabinets" fetchpriority="high"><figcaption>Illustrative photography</figcaption></figure>
+          <div class="wg-photo-link"><span class="wg-small">Skills worth seeing.</span><a class="wg-text-link" href="#wg-tour" data-goto="tour">Explore the app →</a></div>
+          <div class="wg-qr-panel"><div class="wg-qr"><img src="assets/smart-qr.svg" width="172" height="172" alt="Scan to download Workgram on iOS or Android"></div><div><span class="wg-eyebrow">Scan to get Workgram</span><h3>One QR.<br>The right store.</h3><p class="wg-small">iPhone or Android.</p><a href="https://workgram.ie/get/" target="_blank" rel="noopener noreferrer">Open download page ↗</a></div></div>
+        </div>
+      </header>
+      <section class="wg-section wg-story" id="wg-story"><span class="wg-anchor" id="story"></span>
+        <div class="wg-wrap">
+          <div class="wg-story-top">
+            <div class="wg-reveal"><span class="wg-eyebrow">Why we built this</span><h2 class="wg-section-head">Trust shouldn’t be <em>a gamble.</em></h2><p class="wg-story-intro">Workgram started with a simple frustration: in Kerry, finding a tradesperson you could actually trust often came down to luck — a name scrawled on paper, a number passed between neighbours, hoping for the best.</p></div>
+            <figure class="wg-editorial wg-story-photo wg-reveal"><img src="assets/generic_story.webp" data-asset="generic_story" width="900" height="600" loading="lazy" decoding="async" alt="Illustrative close-up of skilled hands measuring an oak board"><figcaption>Illustrative photography</figcaption></figure>
+          </div>
+          <div class="wg-story-grid">
+            <article class="wg-story-item wg-reveal"><h3>Every tradesperson deserves better.</h3><p>Whether you've twenty years in the trade or you're just starting out, your work should speak for itself — not buried under someone else's advertising budget. Every completed job deserves an equal shot at winning the next one.</p></article>
+            <article class="wg-story-item wg-reveal"><h3>Every customer deserves to know.</h3><p>Hiring someone into your home is a genuine act of trust. You see exactly who you're hiring before you ever say yes — their real, verified work, their actual reviews, their certifications.</p></article>
+            <article class="wg-story-item wg-reveal"><h3>Fair only works both ways.</h3><p>Every payment is held securely until both sides are genuinely happy. The worker's paid properly for real work done. The customer only pays once the job is actually right.</p></article>
+          </div>
+          <p class="wg-story-close wg-reveal">Kerry-built, Kerry-first. <em>This is Workgram.</em></p>
+        </div>
+      </section>
+      <section class="wg-section" id="wg-guide"><span class="wg-anchor" id="how"></span><span class="wg-anchor" id="customers"></span>
+        <div class="wg-wrap">
+          <div class="wg-reveal"><span class="wg-eyebrow">How it works</span><h2 class="wg-section-head">Your guide to <em>Workgram.</em></h2><p class="wg-tutorial-intro">Every step, for whoever’s hiring and whoever’s working.</p></div>
+          <div class="wg-role-tabs" role="tablist" aria-label="Instructions for customers and workers"><button type="button" role="tab" id="wg-tab-customer" aria-controls="wg-guide-panel" aria-selected="true" data-role="customer">Customer<small>Find and hire local workers</small></button><button type="button" role="tab" id="wg-tab-worker" aria-controls="wg-guide-panel" aria-selected="false" data-role="worker">Worker<small>Build your profile and find work</small></button></div>
+          <div id="wg-guide-panel" role="tabpanel" aria-labelledby="wg-tab-customer"><ol class="wg-instructions" id="wg-written"><li><span class="wg-number">01</span><div><h3>Start with your job</h3><p>Open Workgram and follow the customer journey. On the Jobs screen, choose “Post a job” to begin.</p></div></li>
+<li><span class="wg-number">02</span><div><h3>Describe what you need</h3><p>Enter the problem and details, check the location, add useful photos and choose a category. Add a budget if you want to, then review before posting.</p></div></li>
+<li><span class="wg-number">03</span><div><h3>Review the response</h3><p>Once your job is live, review the offers you receive. Compare the scope, price and availability before deciding.</p></div></li>
+<li><span class="wg-number">04</span><div><h3>Get to know the worker</h3><p>Open the worker’s profile. Review their experience, verification information, portfolio and reviews. Use chat to clarify what is included.</p></div></li>
+<li><span class="wg-number">05</span><div><h3>Choose and check the payment</h3><p>Agree the work and timing. Check the total and any fees shown in the app before accepting and completing its payment steps.</p></div></li>
+<li><span class="wg-number">06</span><div><h3>Stay in touch</h3><p>Use the conversation to arrange access and timing. When tracking is available for your accepted job, follow the worker’s progress.</p></div></li>
+<li><span class="wg-number">07</span><div><h3>Check the result and review</h3><p>Inspect the finished work before confirming completion. Leave an honest review. Use the available support or dispute process if something needs attention.</p></div></li></ol></div>
+        </div>
+      </section>
+      <section class="wg-section wg-tutorial" id="wg-tour"><span class="wg-anchor" id="portfolio"></span>
+        <div class="wg-wrap">
+          <div class="wg-reveal"><span class="wg-eyebrow">See it for yourself</span><h2 class="wg-section-head">Watch it <em>in action.</em></h2><p class="wg-tutorial-intro">Follow the chapters, or press Play tour. The screen changes as you explore.</p><p class="wg-small wg-app-note">Illustrative app walkthrough. Some example details have been edited.</p></div>
+          <div class="wg-role-switch" aria-label="Tutorial journey"><button type="button" data-role="customer" aria-pressed="true">Customer tutorial</button><button type="button" data-role="worker" aria-pressed="false">Worker tutorial</button></div><noscript><p class="wg-small">Enable JavaScript for the interactive phone tour. The written guides and download links work without it.</p></noscript><div class="wg-tour-grid">
+            <div class="wg-phone-stage">
+              <div class="wg-phone"><div class="wg-screen" id="wg-screen"><img id="wg-tour-image" src="assets/01_hero.webp" alt="Workgram customer home screen"><div class="wg-screen-missing" id="wg-missing" hidden><span class="wg-screen-label">Screen to add</span><h3 id="wg-missing-title"></h3><p>The matching app screenshot will appear here.</p></div></div></div>
+              <div class="wg-player-controls"><button type="button" id="wg-prev" aria-label="Previous tutorial step">←</button><button type="button" class="wg-play" id="wg-play">▶ Play tour</button><button type="button" id="wg-next" aria-label="Next tutorial step">→</button><button type="button" id="wg-replay" aria-label="Replay from the first step">↺</button></div>
+              <p class="wg-player-caption" id="wg-caption" aria-live="polite"></p>
+            </div>
+            <div id="wg-chapters"></div>
+          </div>
+        </div>
+      </section>
+      <section class="wg-section" id="workers"><div class="wg-wrap"><span class="wg-eyebrow">Founding tradespeople</span><h2 class="wg-section-head">0% platform fee.<br><em>Forever.</em></h2><p class="wg-tutorial-intro">Kerry’s founding tradespeople pay 0% forever. Not a launch offer — a promise.</p><p class="wg-tutorial-intro" style="margin-top:16px">Sign up during the founding cohort and your platform fee is locked at zero for as long as you work on Workgram. No fine print, no revisiting it later.</p><a class="wg-action wg-primary" href="#wg-download" data-goto="download" style="margin-top:24px">Sign up as a founding worker</a></div></section>
+      <section class="wg-section wg-download" id="wg-download"><span class="wg-anchor" id="get-app"></span><div class="wg-wrap wg-download-grid"><div><span class="wg-eyebrow">Take the next step</span><h2 class="wg-section-head">Local work.<br><em>In your pocket.</em></h2><p class="wg-tutorial-intro">Scan the smart QR with your phone, or choose your store.</p><div class="wg-actions" style="margin-top:24px"><a class="wg-action wg-primary" href="https://workgram.ie/get/" target="_blank" rel="noopener noreferrer">Get Workgram ↗</a><a class="wg-action" href="mailto:support@workgram.ie">Contact support</a></div><p class="wg-small wg-app-note">Android is in closed testing. Google Play access is currently limited to eligible testers.</p></div><div class="wg-download-code"><div class="wg-qr"><img src="assets/smart-qr.svg" width="172" height="172" alt="Scan to download Workgram on iOS or Android"></div><div class="wg-store-links"><a class="wg-action wg-primary" href="https://apps.apple.com/ie/app/workgram/id6782429046">Download on the App Store</a><a class="wg-action" href="https://play.google.com/store/apps/details?id=com.workgram.app">Get it on Google Play — closed test</a></div></div></div></section>
+<noscript><section class="wg-section"><div class="wg-wrap"><h2 class="wg-section-head">Worker instructions</h2><ol class="wg-instructions"><li><span class="wg-number">01</span><div><h3>Build your profile</h3><p>Add accurate skills, experience and service information. Complete the verification and payout setup requested in the app.</p></div></li>
+<li><span class="wg-number">02</span><div><h3>Show what you can do</h3><p>Add your own project photos, useful descriptions and supported reels. Let customers see the work that is relevant to their job.</p></div></li>
+<li><span class="wg-number">03</span><div><h3>Find suitable local work</h3><p>Review nearby jobs relevant to your skills. Check the description, location and photos before deciding whether to bid.</p></div></li>
+<li><span class="wg-number">04</span><div><h3>Send a clear bid</h3><p>State the proposed scope, price and availability. Make it clear what is included and what still needs to be agreed.</p></div></li>
+<li><span class="wg-number">05</span><div><h3>Follow the acceptance</h3><p>Check your alerts for an accepted bid, then open the job conversation to agree access, materials and timing.</p></div></li>
+<li><span class="wg-number">06</span><div><h3>Communicate and carry out the work</h3><p>Keep the customer updated. Use the accepted-job workflow and on-the-way tracking where offered and appropriate.</p></div></li>
+<li><span class="wg-number">07</span><div><h3>Complete the job and build reputation</h3><p>Add the completion record required by the app and follow its confirmation and payout process. Keep your portfolio current as your work grows.</p></div></li></ol></div></section></noscript>
+    </main>
+    <footer class="wg-footer"><span>WORKGRAM · Kerry, Ireland</span><a href="mailto:support@workgram.ie">support@workgram.ie</a><span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="delete-account.html">Delete account</a></span></footer>
   </div>
-</nav>
-
-<header class="hero">
-  <div class="hero-bg" id="heroBg"></div>
-  <div class="hero-scrim"></div>
-  <div class="shell hero-content">
-    <div class="eyebrow-row"><span class="eyebrow-dot"></span><span class="label" style="color:var(--ink-soft)">Now live in Kerry &amp; Cork</span></div>
-    <h1 class="hero-head">
-      <span class="w">Find</span> <span class="w">a</span> <span class="w">tradesperson</span><br>
-      <span class="w">who</span> <span class="w accent">actually</span> <span class="w accent">turns up.</span>
-    </h1>
-    <p class="hero-dek">Post the job, get bids from verified local pros, watch them on the way, pay only when it's done. No call-out fees. No pay-per-lead games.</p>
-    <div class="hero-actions">
-      <a href="#get-app" class="btn btn-primary">Post a job free</a>
-      <a href="#how" class="btn btn-ghost">See how it works</a>
-    </div>
-    <p class="hero-sub-cta">Tradesperson? <a href="#workers">Join the founding cohort — 0% fees, forever →</a></p>
-  </div>
-  <div class="hero-tag">Plumbing — Radiator install, Kerry</div>
-  <div class="scroll-cue" aria-hidden="true"></div>
-</header>
-
-<div class="status-strip">
-  <div class="shell status-row stagger">
-    <div class="status-item"><span class="label">Platform</span><span class="status-val">iOS live</span></div>
-    <div class="status-item"><span class="label">Android</span><span class="status-val">Closed testing</span></div>
-    <div class="status-item"><span class="label">Coverage</span><span class="status-val">Kerry + Cork</span></div>
-    <div class="status-item"><span class="label">Founding fee</span><span class="status-val" style="color:var(--green-ink)">0%, forever</span></div>
-  </div>
+  
+  
+  
 </div>
 
-<section id="story">
-  <div class="shell">
-    <div class="reveal">
-      <div class="section-tag"><span class="label">Why we built this</span></div>
-      <h2 class="section-head">Trust shouldn't be a gamble.</h2>
-      <p class="section-dek">Workgram started with a simple frustration: in Kerry, finding a tradesperson you could actually trust often came down to luck — a name scrawled on paper, a number passed between neighbours, hoping for the best.</p>
-    </div>
-    <div class="steps stagger">
-      <div class="step">
-        <h3 style="font-size:1.05rem;text-transform:none;margin-bottom:10px;">Every tradesperson deserves better.</h3>
-        <p>Whether you've twenty years in the trade or you're just starting out, your work should speak for itself — not buried under someone else's advertising budget. Every completed job deserves an equal shot at winning the next one.</p>
-      </div>
-      <div class="step">
-        <h3 style="font-size:1.05rem;text-transform:none;margin-bottom:10px;">Every customer deserves to know.</h3>
-        <p>Hiring someone into your home is a genuine act of trust. You see exactly who you're hiring before you ever say yes — their real, verified work, their actual reviews, their certifications.</p>
-      </div>
-      <div class="step">
-        <h3 style="font-size:1.05rem;text-transform:none;margin-bottom:10px;">Fair only works both ways.</h3>
-        <p>Every payment is held securely until both sides are genuinely happy. The worker's paid properly for real work done. The customer only pays once the job is actually right.</p>
-      </div>
-    </div>
-    <p class="story-close reveal">Kerry-built, Kerry-first. This is Workgram.</p>
-  </div>
-</section>
-
-<section id="how" style="background:var(--paper-raised);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
-  <div class="shell">
-    <div class="reveal">
-      <div class="section-tag"><span class="label">How it works</span></div>
-      <h2 class="section-head">Three steps. No cold calling.</h2>
-      <p class="section-dek">Workgram replaces the "ring five lads and hope one calls back" way of hiring with something you can actually watch happen.</p>
-    </div>
-    <div class="how-grid">
-      <div class="how-photo reveal">
-        <img src="https://images.pexels.com/photos/6419128/pexels-photo-6419128.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Tradesperson's hands fitting steel pipework" loading="lazy">
-        <div class="how-photo-tag">On the tools — pipework, Tralee</div>
-      </div>
-      <div class="how-steps stagger">
-        <div class="how-step">
-          <div class="step-num">01</div>
-          <div><h3>Post the job, free</h3><p>Describe what you need, add a photo if it helps. Local verified pros see it immediately — no signup wall, no waiting on hold.</p></div>
-        </div>
-        <div class="how-step">
-          <div class="step-num">02</div>
-          <div><h3>Compare real bids</h3><p>See price, reviews, and completed work from each tradesperson before you choose — not just whoever answered the phone first.</p></div>
-        </div>
-        <div class="how-step">
-          <div class="step-num">03</div>
-          <div><h3>Track it, pay when done</h3><p>Live "on my way" tracking, secure payment held until the job's finished, and a photo record of the completed work.</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="portfolio">
-  <div class="shell">
-    <div class="reveal">
-      <div class="section-tag"><span class="label">Reels &amp; Portfolio</span></div>
-      <h2 class="section-head">See the work, not just a star rating.</h2>
-      <p class="section-dek">Workers post <strong>Reels</strong> and completed-job photos straight from the tools. Before you ever message someone, scroll their actual work — and <strong>show off your own</strong>: rewiring a fuse board, tiling a bathroom, a finished extension.</p>
-    </div>
-    <div class="portfolio-grid stagger">
-      <div class="pgrid-item"><img src="https://images.pexels.com/photos/16509869/pexels-photo-16509869/free-photo-of-close-up-of-man-using-a-spanner.jpeg?auto=compress&cs=tinysrgb&w=700" alt="" loading="lazy"><div class="pcap">Pipe fitting</div></div>
-      <div class="pgrid-item"><img src="https://images.pexels.com/photos/7859953/pexels-photo-7859953.jpeg?auto=compress&cs=tinysrgb&w=700" alt="" loading="lazy"><div class="pcap">Boiler service</div></div>
-      <div class="pgrid-item"><img src="https://images.pexels.com/photos/29226627/pexels-photo-29226627/free-photo-of-mechanic-performing-engine-repair-maintenance.jpeg?auto=compress&cs=tinysrgb&w=700" alt="" loading="lazy"><div class="pcap">Engine repair</div></div>
-      <div class="pgrid-item"><img src="https://images.pexels.com/photos/6419128/pexels-photo-6419128.jpeg?auto=compress&cs=tinysrgb&w=700" alt="" loading="lazy"><div class="pcap">Steel pipework</div></div>
-    </div>
-    <div class="portfolio-chip reveal">
-      <div class="avatar" style="background:var(--orange)">CH</div>
-      Conor Healy — Electrician, Tralee <span style="color:var(--green-ink);font-weight:600;">✓ Safe Electric</span>
-    </div>
-  </div>
-</section>
-
-<section id="customers" style="background:var(--paper-raised);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
-  <div class="shell">
-    <div class="reveal">
-      <div class="section-tag"><span class="label">Two sides, one platform</span></div>
-      <h2 class="section-head">Built for whoever's hiring and whoever's working.</h2>
-    </div>
-    <div class="split reveal">
-      <div class="split-panel">
-        <div class="split-kicker">Hiring</div>
-        <h3>Stop guessing who's actually good.</h3>
-        <ul class="split-list">
-          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke="#6fbf94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Every pro is identity-verified before they can bid</li>
-          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke="#6fbf94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Real portfolios and past-job photos, not just a star rating</li>
-          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke="#6fbf94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Pay is held until you confirm the job is done</li>
-        </ul>
-        <a href="#get-app" class="btn btn-primary">Post a job</a>
-      </div>
-      <div class="split-panel accent" id="workers">
-        <div class="split-kicker">Working</div>
-        <h3>Get found. Get hired. Keep what you earn.</h3>
-        <ul class="split-list">
-          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke="#6fbf94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Founding Kerry tradespeople pay 0% platform fee — forever</li>
-          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke="#6fbf94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Post reels of finished work — build a following, not just a profile</li>
-          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke="#6fbf94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Bid on unlimited jobs — no pay-per-lead, no credits to buy</li>
-        </ul>
-        <a href="#get-app" class="btn btn-ghost" style="border-color:var(--green-ink);color:var(--green-ink)">Join as a founding pro</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="trust-proof">
-  <div class="shell">
-    <div class="reveal">
-      <div class="section-tag"><span class="label">Proof, both ways</span></div>
-      <h2 class="section-head">Trust isn't a promise here. It's a photo.</h2>
-    </div>
-    <div class="proof-grid stagger">
-      <div class="proof-card placeholder">
-        <div class="proof-bg"></div>
-        <div class="proof-scrim"></div>
-        <div class="proof-note">Photo slot — real Kerry customer at the door</div>
-        <div class="proof-body">
-          <div class="split-kicker">Customer</div>
-          <h3>Show what needs doing.</h3>
-          <p>When you post the job, add a photo of the problem — the leak, the socket, the crack in the tile. Workers bid on what's actually in front of them, not a guess.</p>
-        </div>
-      </div>
-      <div class="proof-card">
-        <div class="proof-bg" style="background-image:url('https://images.pexels.com/photos/7859953/pexels-photo-7859953.jpeg?auto=compress&cs=tinysrgb&w=1000')"></div>
-        <div class="proof-scrim"></div>
-        <div class="proof-body">
-          <div class="split-kicker">Worker</div>
-          <h3>Show what got done.</h3>
-          <p>Before-and-after photos, uploaded the moment the job's marked complete. No he-said-she-said — just a documented record both sides can point to.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="categories" style="background:var(--paper-raised);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
-  <div class="shell">
-    <div class="reveal">
-      <div class="section-tag"><span class="label">Categories</span></div>
-      <h2 class="section-head">Not just trades. Anyone skilled, local, and verified.</h2>
-      <p class="section-dek">60+ categories and counting — from a leaking radiator to a rebrand.</p>
-    </div>
-    <div class="cat-grid stagger">
-      <div class="cat-card"><svg class="cat-icon" viewBox="0 0 36 36" fill="none"><circle cx="12" cy="12" r="5" stroke="var(--orange)" stroke-width="2"/><path d="M16 16L26 26" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"/><circle cx="27" cy="27" r="3" stroke="var(--orange)" stroke-width="2"/></svg><span>Plumbing</span></div>
-      <div class="cat-card"><svg class="cat-icon" viewBox="0 0 36 36" fill="none"><path d="M20 6L11 20H18L15 30L26 15H19L20 6Z" stroke="var(--orange)" stroke-width="2" stroke-linejoin="round"/></svg><span>Electrical</span></div>
-      <div class="cat-card"><svg class="cat-icon" viewBox="0 0 36 36" fill="none"><path d="M8 26L18 8L28 26H8Z" stroke="var(--orange)" stroke-width="2" stroke-linejoin="round"/><path d="M13 26V19H23V26" stroke="var(--orange)" stroke-width="2"/></svg><span>Building</span></div>
-      <div class="cat-card"><svg class="cat-icon" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="12" r="4" stroke="var(--orange)" stroke-width="2"/><path d="M9 29C9 22 13 18 18 18C23 18 27 22 27 29" stroke="var(--orange)" stroke-width="2"/><path d="M22 8L26 5" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"/></svg><span>Mechanic</span></div>
-      <div class="cat-card"><svg class="cat-icon" viewBox="0 0 36 36" fill="none"><path d="M11 8V26" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"/><path d="M11 8C15 8 15 13 11 13" stroke="var(--orange)" stroke-width="2"/><path d="M20 10L26 26" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"/><path d="M18 20H24" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"/></svg><span>Cleaning</span></div>
-      <div class="cat-card"><svg class="cat-icon" viewBox="0 0 36 36" fill="none"><rect x="7" y="9" width="22" height="14" rx="1.5" stroke="var(--orange)" stroke-width="2"/><path d="M13 26H23" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"/><path d="M11 13H15M11 17H15M19 13H25M19 17H25M19 21H25" stroke="var(--orange)" stroke-width="1.6" stroke-linecap="round"/></svg><span>Accounting</span></div>
-      <div class="cat-card"><svg class="cat-icon" viewBox="0 0 36 36" fill="none"><path d="M9 27L23 13L27 17L13 31L9 31L9 27Z" stroke="var(--orange)" stroke-width="2" stroke-linejoin="round"/><path d="M19 17L23 21" stroke="var(--orange)" stroke-width="2"/></svg><span>Design</span></div>
-      <div class="cat-card"><svg class="cat-icon" viewBox="0 0 36 36" fill="none"><rect x="8" y="9" width="20" height="13" rx="1.5" stroke="var(--orange)" stroke-width="2"/><path d="M6 26H30" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"/></svg><span>IT support</span></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="shell">
-    <div class="banner reveal">
-      <div>
-        <h2>Kerry's founding tradespeople pay 0% forever. Not a launch offer — a promise.</h2>
-        <p>Sign up during the founding cohort and your platform fee is locked at zero for as long as you work on Workgram. No fine print, no revisiting it later.</p>
-      </div>
-      <a href="#workers" class="btn btn-primary">Claim founding status</a>
-    </div>
-  </div>
-</section>
-
-<footer id="get-app">
-  <div class="shell">
-    <div class="foot-grid">
-      <div class="foot-brand">
-        <a href="/" class="logo">
-          <svg class="logo-mark" viewBox="0 0 100 60" fill="none"><polyline points="4,4 27,52 50,14 73,52 96,4" stroke="var(--orange)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Workgram
-        </a>
-        <p>Kerry &amp; Cork's local trades and services marketplace. Verified pros, honest fees, work you can watch happen.</p>
-        <a href="https://apps.apple.com/ie/app/workgram/id6782429046" class="store-btn">📱 Download on the App Store</a>
-        <div class="qr-block">
-          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbwAAAG8AQAAAACNyy1yAAACgElEQVR4nO2ca47jIBCEq1fzH98g9z/W3ABOUPujm5c30mqT7BCcQtGMcfiEkVCn+oGNeKiVX49xgECBAgUKFChQoECB/wxaawcAoBhKdONzGrDhGgVeBEz0BsDMANiNSPRNexqw+FEFfij41a4MQMoACBjAYr4vvTsOeG5GgQJfCTLDbjQzJNYf/f87o0CBf2tfd+6VA4lwi1rML143o0CBj7W+V9uGtEQAKEdogEEMvGJGgQIfbLPHBCTe/wwDSDJvtEaB1wDDrk420x3/YizGGgf4QwZstEaB1wAnver+fnP8kWiJlrJ/RXRhsNUaBV4D7BqAGczRDVWQSDL+tiYNIHAp6EEqj1B5egoAvyNLZWaxgZNyAQJXgVUDJPbwVMoGsBwYZap3iz09o0CBT4FuP5lhR/Wt/L4ZikW4NUN2VeA6sArUDOapOwas4tc/dRErvSpwIRh61SupvGoFYWNbmlW1KwLXgaFXLTECVuVAMdYEKzGHW7uC3WiNAq8BnoNUQIiBqQiwXvegljSAwJ8Ga3w1hWQN1ZrRlOqUhG03tVcF/jR43652l7+5VzkGa68KXAQOOdaUXaC6dmWxGmiNcwGGiLIuelSBHw6ec6zjfUyOf70puypwKdgiqG3ftmhVLwmYzgjst0aB1wDPx1R9W6bhqOABYDS8+61R4OZgqwfI/t9O39d8qwdaFV8V+A7gcPYfzahGK+bnBNFzWFuuUeDFwCZWW/CqFwwUqzLgLR5VoECS/K5yoBnVqTbgXR5V4AeCUV6FcKzsxqgGTPUFLKMq2HONAncGq29VJqcqPKn6lgDfqH7kSr6VwEWg6V3BAgUKFChQoECBAt8Y/A1QUKYCW6KzyAAAAABJRU5ErkJggg==" alt="Scan to download Workgram">
-          <div class="qr-block-text">Scan with your phone camera to get the app</div>
-        </div>
-      </div>
-      <div class="foot-cols">
-        <div class="foot-col">
-          <span class="label">Platform</span>
-          <a href="#how">How to use</a>
-          <a href="#portfolio">Portfolio</a>
-          <a href="#customers">For customers</a>
-          <a href="#workers">Sign up</a>
-        </div>
-        <div class="foot-col">
-          <span class="label">Company</span>
-          <a href="#story">Why we built this</a>
-          <a href="mailto:support@workgram.ie">Contact</a>
-          <a href="/privacy.html">Privacy</a>
-          <a href="/terms.html">Terms</a>
-        </div>
-      </div>
-    </div>
-    <div class="foot-legal">
-      <span>© 2026 Workgram. An Irish limited company.</span>
-      <span>Kerry, Ireland</span>
-    </div>
-  </div>
-</footer>
-
-<script>
-(function () {
-  var nav = document.getElementById('nav');
-  var heroBg = document.getElementById('heroBg');
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var ticking = false;
-
-  function onScroll() {
-    var y = window.scrollY || window.pageYOffset;
-    if (y > 40) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
-    if (!reduce && heroBg) heroBg.style.transform = 'translateY(' + (y * 0.28) + 'px)';
-    ticking = false;
-  }
-  window.addEventListener('scroll', function () {
-    if (!ticking) { window.requestAnimationFrame(onScroll); ticking = true; }
-  }, { passive: true });
-  onScroll();
-
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.reveal, .stagger').forEach(function (el) { io.observe(el); });
-})();
-</script>
 </body>
 </html>

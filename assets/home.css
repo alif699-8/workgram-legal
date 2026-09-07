@@ -1,0 +1,157 @@
+
+    #wg-immersive{--wg-bg:#080810;--wg-panel:#12121c;--wg-panel2:#191923;--wg-text:#f6f3ed;--wg-muted:#b7b6c1;--wg-orange:#ff7134;--wg-line:#30303c;color:var(--wg-text);font:400 15px/1.65 'Work Sans',system-ui,sans-serif;color-scheme:dark;width:100%;}
+    #wg-immersive *{box-sizing:border-box}
+    #wg-immersive button,#wg-immersive a{font:inherit}
+    #wg-immersive button{cursor:pointer}
+    #wg-immersive button:focus-visible,#wg-immersive a:focus-visible{outline:3px solid #ffb48f;outline-offset:4px}
+    #wg-immersive a{color:inherit}
+    #wg-immersive h1,#wg-immersive h2,#wg-immersive h3,#wg-immersive p{margin:0}
+    #wg-immersive h1,#wg-immersive h2,#wg-immersive h3{font-family:'Big Shoulders Display',Impact,sans-serif;font-weight:800;line-height:1;text-wrap:balance}
+    #wg-immersive [hidden]{display:none!important}
+    #wg-immersive .wg-page{height:760px;overflow-y:auto;overflow-x:hidden;background:var(--wg-bg);position:relative;scroll-behavior:smooth;scrollbar-color:#5a4b43 #12121c;isolation:isolate}
+    #wg-immersive .wg-nav{position:sticky;top:0;z-index:20;background:#080810;border-bottom:1px solid var(--wg-line);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+    #wg-immersive .wg-brand{display:flex;align-items:center;gap:10px;font-family:'Big Shoulders Display',Impact,sans-serif;font-size:25px;font-weight:900;letter-spacing:.015em;text-decoration:none;border:0;background:transparent;color:var(--wg-text);padding:0}
+    #wg-immersive .wg-brand svg{width:30px;height:20px;flex:none}
+    #wg-immersive .wg-nav-links{display:flex;align-items:center;gap:22px}
+    #wg-immersive .wg-nav-links button,#wg-immersive .wg-nav-links a{padding:3px 0;background:transparent;border:0;text-decoration:none;color:var(--wg-muted);font-size:13px}
+    #wg-immersive .wg-nav-links button:hover,#wg-immersive .wg-nav-links a:hover{color:var(--wg-text)}
+    #wg-immersive .wg-action{border:1px solid var(--wg-line);border-radius:8px;background:var(--wg-panel2);color:var(--wg-text);padding:12px 20px;font-weight:600;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;transition:transform .18s ease,background .18s ease}
+    #wg-immersive .wg-action:hover{transform:translateY(-2px);background:#232330}
+    #wg-immersive .wg-action.wg-primary{background:var(--wg-orange);border-color:var(--wg-orange);color:#1c0e05}
+    #wg-immersive .wg-action.wg-primary:hover{background:#ff8958}
+    #wg-immersive .wg-progress{height:3px;position:absolute;left:0;right:0;bottom:-1px;transform-origin:left;background:var(--wg-orange);transform:scaleX(0)}
+    #wg-immersive .wg-wrap{padding:0 48px;max-width:1120px;margin:auto}
+    #wg-immersive .wg-hero{padding-top:54px;padding-bottom:50px;display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:center;min-height:595px}
+    #wg-immersive .wg-eyebrow{font-size:11px;letter-spacing:.16em;color:var(--wg-muted);font-weight:600;text-transform:uppercase}
+    #wg-immersive .wg-local{display:flex;align-items:center;gap:9px;margin-bottom:25px}
+    #wg-immersive .wg-dot{width:6px;height:6px;border-radius:100%;background:#72cf9d}
+    #wg-immersive .wg-hero h1{font-size:clamp(46px,6.7vw,78px);letter-spacing:-.015em;margin:18px 0 22px;text-transform:uppercase;max-width:13ch}
+    #wg-immersive em{font-style:normal;color:var(--wg-orange)}
+    #wg-immersive .wg-hero-copy{color:var(--wg-muted);max-width:40ch;font-size:16px;margin-bottom:24px}
+    #wg-immersive .wg-actions{display:flex;gap:10px;flex-wrap:wrap}
+    #wg-immersive .wg-small{font-size:12px;color:var(--wg-muted)}
+    #wg-immersive .wg-app-note{margin-top:11px}
+    #wg-immersive .wg-role-switch{display:inline-flex;padding:4px;border:1px solid var(--wg-line);border-radius:9px;background:#101019;gap:3px}
+    #wg-immersive .wg-role-switch button{background:transparent;border:0;border-radius:6px;padding:9px 15px;color:var(--wg-muted);font-size:12px;font-weight:600;min-height:40px}
+    #wg-immersive .wg-role-switch button[aria-pressed=true]{background:var(--wg-orange);color:#1c0e05}
+    #wg-immersive .wg-hero-side{display:flex;flex-direction:column;gap:17px;align-items:stretch}
+    #wg-immersive .wg-feature-preview{border:1px solid var(--wg-line);border-radius:16px;background:#12121c;display:flex;gap:18px;align-items:center;padding:18px;overflow:hidden}
+    #wg-immersive .wg-mini-phone{width:94px;height:172px;border-radius:13px;overflow:hidden;flex:none;position:relative;background:#080810;border:2px solid #494951}
+    #wg-immersive .wg-mini-phone img{position:absolute;width:135%;max-width:none;height:auto;left:-17.5%;top:-35%}
+    #wg-immersive .wg-feature-preview h3{font-size:26px;margin:8px 0 10px}
+    #wg-immersive .wg-text-link{background:transparent;border:0;color:var(--wg-orange);padding:0;text-align:left;font-size:13px;font-weight:600}
+    #wg-immersive .wg-qr-panel{background:#171721;border:1px solid #49404a;border-radius:14px;padding:18px;display:flex;align-items:center;gap:20px}
+    #wg-immersive .wg-qr{width:136px;min-width:136px;line-height:0;border-radius:6px;overflow:hidden;background:#fff}
+    #wg-immersive .wg-qr svg{width:100%;height:auto;display:block}
+    #wg-immersive .wg-qr-panel h3{font-size:25px;margin:7px 0 8px}
+    #wg-immersive .wg-qr-panel a{font-size:12px;text-underline-offset:4px;color:var(--wg-orange)}
+    #wg-immersive .wg-scroll-note{display:flex;align-items:center;gap:10px;margin-top:30px;color:#a4a3b0;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+    #wg-immersive .wg-section{padding-top:75px;padding-bottom:75px;border-top:1px solid var(--wg-line);scroll-margin-top:90px}
+    #wg-immersive .wg-story{background:#111118}
+    #wg-immersive .wg-editorial{margin:0;position:relative;overflow:hidden;border-radius:14px;background:#24231f;border:1px solid #37332f}
+    #wg-immersive .wg-editorial img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .65s ease}
+    #wg-immersive .wg-editorial:hover img{transform:scale(1.025)}
+    #wg-immersive .wg-hero-photo{height:270px}
+    #wg-immersive .wg-hero-photo img{object-position:65% center}
+    #wg-immersive .wg-editorial figcaption{position:absolute;bottom:10px;left:12px;background:#080810dd;color:#eee9e0;font-size:10px;padding:4px 8px;border-radius:4px;letter-spacing:.03em}
+    #wg-immersive .wg-photo-link{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:0 2px}
+    #wg-immersive .wg-story-top{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+    #wg-immersive .wg-story-photo{height:310px}
+    @media(max-width:800px){#wg-immersive .wg-hero-photo{height:245px}#wg-immersive .wg-story-top{gap:24px}#wg-immersive .wg-story-photo{height:300px}}
+    @media(max-width:580px){#wg-immersive .wg-hero-photo{height:240px}#wg-immersive .wg-story-top{grid-template-columns:1fr;gap:8px}#wg-immersive .wg-story-photo{height:235px}#wg-immersive .wg-editorial:hover img{transform:none}}
+    #wg-immersive .wg-section-head{font-size:clamp(35px,5.2vw,54px);text-transform:uppercase;letter-spacing:-.01em;margin:15px 0 22px}
+    #wg-immersive .wg-story-intro{font-size:17px;line-height:1.75;max-width:65ch;color:#d2cfd7;margin:0 0 30px}
+    #wg-immersive .wg-story-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:35px}
+    #wg-immersive .wg-story-item{border-top:2px solid #5d4033;padding-top:22px}
+    #wg-immersive .wg-story-item h3{font-size:25px;margin-bottom:16px;line-height:1.12}
+    #wg-immersive .wg-story-item p{color:var(--wg-muted);font-size:13px;line-height:1.8}
+    #wg-immersive .wg-story-close{font-size:25px;font-family:'Big Shoulders Display',Impact,sans-serif;font-weight:700;margin-top:36px}
+    #wg-immersive .wg-role-tabs{display:flex;gap:4px;padding:5px;background:#13131d;border:1px solid var(--wg-line);border-radius:12px;margin:28px 0}
+    #wg-immersive .wg-role-tabs button{flex:1;background:transparent;color:var(--wg-muted);border:0;border-radius:8px;padding:13px 16px;font-size:16px;font-weight:600}
+    #wg-immersive .wg-role-tabs button[aria-selected=true]{background:var(--wg-orange);color:#1c0e05}
+    #wg-immersive .wg-role-tabs small{display:block;font-size:11px;font-weight:400;margin-top:2px}
+    #wg-immersive .wg-instructions{padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 32px;margin:0}
+    #wg-immersive .wg-instructions li{display:grid;grid-template-columns:32px 1fr;gap:12px;padding:22px 0;border-bottom:1px solid #292935}
+    #wg-immersive .wg-number{font-size:12px;color:var(--wg-orange);font-weight:600;padding-top:3px;letter-spacing:.1em}
+    #wg-immersive .wg-instructions h3{font-family:'Work Sans',sans-serif;font-size:15px;line-height:1.4;font-weight:600;margin-bottom:7px}
+    #wg-immersive .wg-instructions p{font-size:13px;line-height:1.75;color:var(--wg-muted)}
+    #wg-immersive .wg-tutorial{background:#0e0e16}
+    #wg-immersive .wg-tutorial-intro{color:var(--wg-muted);max-width:55ch}
+    #wg-immersive .wg-tour-grid{display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:start;margin-top:38px;position:relative}
+    #wg-immersive .wg-phone-stage{position:sticky;top:96px;display:flex;flex-direction:column;align-items:center;gap:12px;padding:0 0 25px}
+    #wg-immersive .wg-phone{width:238px;height:482px;background:#080810;border:3px solid #51515c;border-radius:32px;padding:7px;box-shadow:0 22px 60px #0007;position:relative;transform:translateY(var(--wg-lift,0px));transition:transform .25s ease}
+    #wg-immersive .wg-phone:before{content:'';position:absolute;z-index:3;background:#050508;border-radius:20px;width:72px;height:18px;top:14px;left:50%;transform:translateX(-50%)}
+    #wg-immersive .wg-screen{position:relative;height:100%;border-radius:24px;overflow:hidden;background:#080810}
+    #wg-immersive .wg-screen img{width:135.2%;max-width:none;height:auto;position:absolute;left:-17.6%;top:-36.7%}
+    #wg-immersive .wg-screen.wg-full-poster img{width:100%;left:0;top:0}
+    #wg-immersive .wg-screen-missing{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:24px;text-align:center;gap:18px}
+    #wg-immersive .wg-screen-missing h3{font-size:32px;line-height:1.1}
+    #wg-immersive .wg-screen-missing p{font-size:13px;color:var(--wg-muted)}
+    #wg-immersive .wg-screen-missing .wg-screen-label{padding:6px 10px;border:1px solid #46404a;border-radius:6px;color:var(--wg-orange);font-size:11px}
+    #wg-immersive .wg-player-controls{display:flex;align-items:center;gap:8px}
+    #wg-immersive .wg-player-controls button{background:#1d1d2a;color:var(--wg-text);border:1px solid var(--wg-line);border-radius:50%;width:42px;height:42px;font-size:16px;display:grid;place-items:center}
+    #wg-immersive .wg-player-controls .wg-play{border-radius:20px;width:auto;min-width:114px;padding:0 15px;background:var(--wg-orange);color:#1c0e05;font-size:13px;font-weight:600}
+    #wg-immersive .wg-player-caption{font-size:11px;color:var(--wg-muted);text-align:center;max-width:280px}
+    #wg-immersive .wg-tour-chapter{padding:40px 0 55px;border-bottom:1px solid var(--wg-line);min-height:218px;scroll-margin-top:130px;opacity:.66;transition:opacity .3s ease}
+    #wg-immersive .wg-tour-chapter.wg-current{opacity:1}
+    #wg-immersive .wg-chapter-label{display:flex;align-items:center;gap:14px;font-size:11px;color:var(--wg-muted);text-transform:uppercase;letter-spacing:.08em}
+    #wg-immersive .wg-chapter-label span{display:inline-grid;place-items:center;width:29px;height:29px;border:1px solid #69616a;border-radius:50%;font-size:12px}
+    #wg-immersive .wg-current .wg-chapter-label span{background:var(--wg-orange);color:#1c0e05;border-color:var(--wg-orange)}
+    #wg-immersive .wg-tour-chapter h3{font-size:33px;line-height:1.05;margin:16px 0 13px}
+    #wg-immersive .wg-tour-chapter p{color:var(--wg-muted);font-size:14px;max-width:36ch}
+    #wg-immersive .wg-chapter-jump{border:0;background:transparent;color:var(--wg-orange);font-size:12px;padding:12px 0 0;text-align:left}
+    #wg-immersive .wg-download{background:#17121b}
+    #wg-immersive .wg-download-grid{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center}
+    #wg-immersive .wg-download-grid .wg-qr{width:172px;min-width:172px;border-radius:8px}
+    #wg-immersive .wg-footer{padding:30px 48px;border-top:1px solid var(--wg-line);display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between;align-items:center;background:#080810;color:var(--wg-muted);font-size:12px}
+    #wg-immersive .wg-footer a{color:var(--wg-orange);font-weight:500;text-underline-offset:4px}
+    #wg-immersive .wg-reveal.wg-enter{animation:wg-enter .6s cubic-bezier(.2,.8,.2,1) both}
+    @keyframes wg-enter{from{opacity:.55;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    #wg-immersive .wg-screen.wg-crossfade{animation:wg-screen-in .35s ease both}
+    @keyframes wg-screen-in{from{opacity:.45;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:800px){#wg-immersive .wg-wrap{padding-left:28px;padding-right:28px}#wg-immersive .wg-hero{gap:25px;grid-template-columns:1.1fr .9fr}#wg-immersive .wg-qr-panel{flex-direction:column;text-align:center}#wg-immersive .wg-hero-side{gap:12px}#wg-immersive .wg-feature-preview{padding:12px;gap:12px}#wg-immersive .wg-mini-phone{width:70px;height:134px}#wg-immersive .wg-feature-preview h3{font-size:22px}#wg-immersive .wg-tour-grid{gap:26px}#wg-immersive .wg-story-grid{gap:18px}#wg-immersive .wg-nav-links{gap:14px}#wg-immersive .wg-nav{padding:14px 22px}}
+    @media(max-width:580px){#wg-immersive .wg-page{height:740px}#wg-immersive .wg-nav-links{display:none}#wg-immersive .wg-nav{padding:13px 18px}#wg-immersive .wg-brand{font-size:23px}#wg-immersive .wg-nav>.wg-action{font-size:12px;padding:8px 12px}#wg-immersive .wg-wrap{padding-left:23px;padding-right:23px}#wg-immersive .wg-hero{display:block;padding-top:36px;padding-bottom:35px}#wg-immersive .wg-hero h1{font-size:54px;max-width:13ch}#wg-immersive .wg-hero-side{margin-top:26px}#wg-immersive .wg-feature-preview{display:none}#wg-immersive .wg-qr-panel{flex-direction:row;text-align:left;padding:15px;gap:15px}#wg-immersive .wg-qr{width:118px;min-width:118px}#wg-immersive .wg-qr-panel h3{font-size:23px}#wg-immersive .wg-section{padding-top:49px;padding-bottom:49px}#wg-immersive .wg-story-grid{grid-template-columns:1fr;gap:26px}#wg-immersive .wg-story-intro{font-size:15px}#wg-immersive .wg-story-item h3{font-size:27px}#wg-immersive .wg-instructions{grid-template-columns:1fr}#wg-immersive .wg-role-tabs button{font-size:14px;padding:12px 8px}#wg-immersive .wg-tour-grid{display:block}#wg-immersive .wg-phone-stage{position:relative;top:auto;padding-bottom:25px}#wg-immersive .wg-tour-chapter{min-height:0;padding:24px 0;opacity:1}#wg-immersive .wg-tour-chapter h3{font-size:29px}#wg-immersive .wg-download-grid{grid-template-columns:1fr;gap:25px}#wg-immersive .wg-download-grid .wg-qr{width:160px}#wg-immersive .wg-footer{padding:27px 23px}#wg-immersive .wg-section-head{font-size:40px}}
+    @media(prefers-reduced-motion:reduce){#wg-immersive .wg-page{scroll-behavior:auto}#wg-immersive *,#wg-immersive *:before,#wg-immersive *:after{animation:none!important;transition:none!important}#wg-immersive .wg-phone{transform:none}}
+  
+html{scroll-behavior:smooth;background:#080810}body{margin:0}
+#wg-immersive .wg-anchor{display:block;position:relative;top:-90px;visibility:hidden}
+#wg-immersive .wg-section{position:relative}
+#wg-immersive .wg-text-link{text-decoration:none}
+#wg-immersive .wg-tutorial .wg-role-switch{margin-top:24px}
+#wg-immersive .wg-hero-side{min-width:0}
+#wg-immersive .wg-nav-links{flex-wrap:wrap}
+#wg-immersive .wg-tour-chapter{min-height:280px}
+#wg-immersive .wg-player-controls button:focus-visible{outline-offset:2px}
+@media(max-width:580px) and (min-height:760px){
+  #wg-immersive .wg-phone-stage{position:sticky;top:74px;background:#0e0e16;padding:12px 0 16px;z-index:5}
+  #wg-immersive .wg-phone{width:172px;height:348px;border-radius:26px}
+  #wg-immersive .wg-phone:before{width:55px;height:12px}
+  #wg-immersive .wg-screen{border-radius:17px}
+  #wg-immersive .wg-tour-chapter{min-height:280px}
+}
+#wg-immersive .wg-page{height:auto;overflow:visible}
+#wg-immersive .wg-qr img{display:block;width:100%;height:auto}
+#wg-immersive .wg-store-links{display:grid;gap:12px;margin-top:20px;width:100%}
+#wg-immersive .wg-download-code{display:flex;flex-direction:column;align-items:center}
+#wg-immersive .wg-download-grid{grid-template-columns:1fr minmax(240px,330px)}
+#wg-immersive .wg-instructions p,#wg-immersive .wg-story-item p,#wg-immersive .wg-tour-chapter p{font-size:16px}
+#wg-immersive .wg-eyebrow{font-size:12px}
+#wg-immersive .wg-nav-links a,#wg-immersive .wg-text-link,#wg-immersive .wg-role-switch button{font-size:14px}
+#wg-immersive .wg-skip{position:absolute;left:16px;top:-100px;z-index:99;background:#ff7134;color:#080810;padding:12px}
+#wg-immersive .wg-skip:focus{top:12px}
+#wg-immersive button:disabled{opacity:.45;cursor:default}
+#wg-immersive .wg-editorial img,#wg-immersive .wg-editorial:hover img{transform:scale(1.08)}
+#wg-immersive .wg-screen.wg-full-poster img{height:100%;object-fit:contain}
+@media(max-width:580px){
+#wg-immersive .wg-page{height:auto}
+#wg-immersive .wg-download-grid{grid-template-columns:1fr}
+#wg-immersive .wg-nav-links{display:flex;gap:12px}
+#wg-immersive .wg-nav-links a{font-size:12px}
+#wg-immersive .wg-nav-links a:last-child{display:none}
+#wg-immersive .wg-brand{font-size:20px}
+#wg-immersive .wg-brand svg{width:22px}
+#wg-immersive .wg-nav{gap:8px;padding:12px}
+#wg-immersive .wg-hero h1{font-size:clamp(38px,11vw,54px)}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#wg-immersive .wg-editorial img{transform:none!important}}
+@media(max-width:420px){#wg-immersive .wg-nav-links a:first-child{display:none}#wg-immersive .wg-nav>.wg-action{padding:8px 10px}}
