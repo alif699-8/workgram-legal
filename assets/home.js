@@ -57,6 +57,7 @@ const viewport=()=>({top:0,bottom:window.innerHeight});
         root.querySelector('#wg-hero-title').innerHTML=role==='customer'?'FIND LOCAL <em>WORKERS.</em><br>SEE THEIR WORK.':'FIND LOCAL <em>WORK.</em><br>BUILD YOUR REPUTATION.';
         root.querySelector('#wg-hero-copy').textContent=role==='customer'?'Find local skills. Explore portfolios. Choose who you hire.':'Show what you do. Discover nearby jobs. Let your work speak for itself.';
         root.querySelector('#wg-hero-cta').textContent=role==='customer'?'Post a job':'Join Workgram';
+        root.querySelector('#wg-hero-cta').setAttribute('href',role==='customer'?'/post/':'/get/');
         guides[role].forEach((row,i)=>{
           const li=document.createElement('li');const number=document.createElement('span');number.className='wg-number';number.textContent=pad(i+1);const body=document.createElement('div');const title=document.createElement('h3');title.textContent=row[0];const copy=document.createElement('p');copy.textContent=row[1];body.append(title,copy);li.append(number,body);written.append(li);
           const section=document.createElement('article');section.className='wg-tour-chapter';section.id='wg-chapter-'+i;
